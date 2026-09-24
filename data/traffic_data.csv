@@ -1,0 +1,16 @@
+vehicle_count,average_speed,traffic_density,congestion_level
+10,50,Low,Low
+15,45,Low,Low
+20,40,Medium,Medium
+25,35,Medium,Medium
+30,30,High,High
+35,25,High,High
+40,20,High,High
+45,15,Very High,Very High
+50,10,Very High,Very High
+18,42,Medium,Medium
+28,32,High,High
+12,48,Low,Low
+38,22,High,High
+48,12,Very High,Very High
+22,38,Medium,Medium

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Traffic Flow Optimization</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Traffic Flow Optimization System</h1>
+
+        <p class="subtitle">
+            AI-based traffic analysis, congestion prediction and signal optimization
+        </p>
+
+
+        <!-- Dashboard -->
+
+        <div class="dashboard">
+
+            <div class="card">
+                <h2>🚗 Vehicle Count</h2>
+                <p id="vehicle-count">--</p>
+            </div>
+
+
+            <div class="card">
+                <h2>🏎️ Average Speed</h2>
+                <p id="average-speed">-- km/h</p>
+            </div>
+
+
+            <!-- Traffic Density -->
+
+            <div class="card density-card">
+
+                <h2>🚦 Traffic Density</h2>
+
+                <p id="traffic-density"
+                   class="density-status">
+                    --
+                </p>
+
+            </div>
+
+
+            <!-- Congestion -->
+
+            <div class="card">
+
+                <h2>⚠️ Congestion Level</h2>
+
+                <p id="congestion-level">
+                    --
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>🚦 Green Signal Time</h2>
+
+                <p id="green-time">
+                    -- seconds
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>📊 Vehicles Processed</h2>
+
+                <p id="vehicles-processed">
+                    --
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>📈 Processing Rate</h2>
+
+                <p id="processing-rate">
+                    -- %
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>🤖 Model Accuracy</h2>
+
+                <p id="model-accuracy">
+                    -- %
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="buttons">
+
+            <button onclick="detectVehicles()">
+                Detect Vehicles from Video
+            </button>
+
+            <button onclick="analyzeTraffic()">
+                Analyze Traffic
+            </button>
+
+            <button onclick="simulateTraffic()">
+                Run Simulation
+            </button>
+
+        </div>
+
+
+        <!-- Result -->
+
+        <div id="result" class="result">
+
+            Click "Detect Vehicles from Video" to start.
+
+        </div>
+
+
+        <!-- Simulation Result -->
+
+        <div id="simulation-result"
+             class="simulation-result">
+
+            Click "Run Simulation" to simulate traffic flow.
+
+        </div>
+
+
+        <!-- Traffic Chart -->
+
+        <div class="chart-container">
+
+            <h2>📊 Traffic Analysis Chart</h2>
+
+            <canvas id="trafficChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        // -----------------------------------------
+        // Traffic Chart
+        // -----------------------------------------
+
+        let trafficChart = null;
+
+
+        function updateTrafficChart(
+            vehicleCount,
+            greenTime,
+            modelAccuracy
+        ) {
+
+            const canvas =
+                document.getElementById("trafficChart");
+
+
+            if (trafficChart) {
+
+                trafficChart.destroy();
+
+            }
+
+
+            trafficChart = new Chart(canvas, {
+
+                type: "bar",
+
+                data: {
+
+                    labels: [
+                        "Vehicles",
+                        "Green Signal (sec)",
+                        "Model Accuracy (%)"
+                    ],
+
+                    datasets: [{
+
+                        label: "Traffic Analysis",
+
+                        data: [
+                            vehicleCount,
+                            greenTime,
+                            modelAccuracy
+                        ]
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+
+        // -----------------------------------------
+        // Traffic Density Style
+        // -----------------------------------------
+
+        function updateDensityStyle(density) {
+
+            const element =
+                document.getElementById("traffic-density");
+
+
+            element.className = "density-status";
+
+
+            if (density === "Low") {
+
+                element.classList.add("density-low");
+
+            }
+
+            else if (density === "Medium") {
+
+                element.classList.add("density-medium");
+
+            }
+
+            else if (density === "High") {
+
+                element.classList.add("density-high");
+
+            }
+
+            else if (density === "Very High") {
+
+                element.classList.add("density-very-high");
+
+            }
+
+        }
+
+
+        // -----------------------------------------
+        // Detect Vehicles
+        // -----------------------------------------
+
+        function detectVehicles() {
+
+            document.getElementById("result").textContent =
+                "Running YOLO vehicle detection... Please wait.";
+
+
+            fetch("/detect-vehicles")
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    document.getElementById(
+                        "vehicle-count"
+                    ).textContent =
+                        data.vehicle_count;
+
+
+                    document.getElementById(
+                        "result"
+                    ).textContent =
+                        "YOLO detected " +
+                        data.vehicle_count +
+                        " vehicles in the video.";
+
+                })
+
+                .catch(error => {
+
+                    document.getElementById(
+                        "result"
+                    ).textContent =
+                        "Unable to detect vehicles.";
+
+                    console.error(error);
+
+                });
+
+        }
+
+
+        // -----------------------------------------
+        // Analyze Traffic
+        // -----------------------------------------
+
+        function analyzeTraffic() {
+
+            fetch("/analyze")
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    document.getElementById(
+                        "vehicle-count"
+                    ).textContent =
+                        data.vehicle_count;
+
+
+                    document.getElementById(
+                        "average-speed"
+                    ).textContent =
+                        data.average_speed +
+                        " km/h";
+
+
+                    document.getElementById(
+                        "traffic-density"
+                    ).textContent =
+                        data.traffic_density;
+
+
+                    updateDensityStyle(
+                        data.traffic_density
+                    );
+
+
+                    document.getElementById(
+                        "congestion-level"
+                    ).textContent =
+                        data.congestion_level;
+
+
+                    document.getElementById(
+                        "green-time"
+                    ).textContent =
+                        data.green_time +
+                        " seconds";
+
+
+                    document.getElementById(
+                        "model-accuracy"
+                    ).textContent =
+                        data.model_accuracy +
+                        " %";
+
+
+                    document.getElementById(
+                        "result"
+                    ).textContent =
+                        data.message +
+                        " Recommended green signal time: " +
+                        data.green_time +
+                        " seconds.";
+
+
+                    updateTrafficChart(
+
+                        data.vehicle_count,
+
+                        data.green_time,
+
+                        data.model_accuracy
+
+                    );
+
+                })
+
+                .catch(error => {
+
+                    document.getElementById(
+                        "result"
+                    ).textContent =
+                        "Unable to analyze traffic.";
+
+                    console.error(error);
+
+                });
+
+        }
+
+
+        // -----------------------------------------
+        // Traffic Simulation
+        // -----------------------------------------
+
+        function simulateTraffic() {
+
+            fetch("/simulate")
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    document.getElementById(
+                        "vehicle-count"
+                    ).textContent =
+                        data.initial_vehicles;
+
+
+                    document.getElementById(
+                        "green-time"
+                    ).textContent =
+                        data.green_time +
+                        " seconds";
+
+
+                    document.getElementById(
+                        "vehicles-processed"
+                    ).textContent =
+                        data.vehicles_processed;
+
+
+                    document.getElementById(
+                        "processing-rate"
+                    ).textContent =
+                        data.processing_percentage +
+                        " %";
+
+
+                    document.getElementById(
+                        "model-accuracy"
+                    ).textContent =
+                        data.model_accuracy +
+                        " %";
+
+
+                    document.getElementById(
+                        "congestion-level"
+                    ).textContent =
+                        data.congestion_level;
+
+
+                    document.getElementById(
+                        "simulation-result"
+                    ).textContent =
+                        "Simulation: " +
+                        data.initial_vehicles +
+                        " vehicles detected. " +
+                        data.green_time +
+                        " seconds of green signal processed approximately " +
+                        data.vehicles_processed +
+                        " vehicles. " +
+                        data.remaining_vehicles +
+                        " vehicles remain.";
+
+
+                    updateTrafficChart(
+
+                        data.initial_vehicles,
+
+                        data.green_time,
+
+                        data.model_accuracy
+
+                    );
+
+                })
+
+                .catch(error => {
+
+                    document.getElementById(
+                        "simulation-result"
+                    ).textContent =
+                        "Unable to run simulation.";
+
+                    console.error(error);
+
+                });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
