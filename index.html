@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Traffic Flow Optimization</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #eaf2f8;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+        color: #1f3c88;
+    }
+
+    .subtitle {
+        color: #555;
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        padding: 25px;
+        background: #f4f8fc;
+        border-radius: 12px;
+        border: 1px solid #d8e2ec;
+    }
+
+    .card h2 {
+        font-size: 19px;
+    }
+
+    .card p {
+        font-size: 28px;
+        font-weight: bold;
+        color: #1976d2;
+    }
+
+    .density {
+        display: inline-block;
+        padding: 8px 18px;
+        border-radius: 20px;
+        background: #d9f7df;
+        color: #16803a !important;
+    }
+
+    .buttons {
+        margin: 30px 0;
+    }
+
+    button {
+        padding: 14px 22px;
+        margin: 5px;
+        border: none;
+        border-radius: 8px;
+        background: #1976d2;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #125ca3;
+    }
+
+    .result {
+        padding: 18px;
+        background: #eef6ff;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .note {
+        margin-top: 25px;
+        padding: 15px;
+        background: #fff8e1;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+        .dashboard {
+            grid-template-columns: 1fr;
+        }
+
+        .container {
+            width: 95%;
+            padding: 20px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="container">
+
+```
+<h1>🚦 AI Traffic Flow Optimization System</h1>
+
+<p class="subtitle">
+    AI-based traffic analysis, congestion prediction and signal optimization
+</p>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>🚗 Vehicle Count</h2>
+        <p id="vehicles">4</p>
+    </div>
+
+    <div class="card">
+        <h2>🏎️ Average Speed</h2>
+        <p>45 km/h</p>
+    </div>
+
+    <div class="card">
+        <h2>🚦 Traffic Density</h2>
+        <p class="density">Low</p>
+    </div>
+
+    <div class="card">
+        <h2>⚠️ Congestion Level</h2>
+        <p>Low</p>
+    </div>
+
+    <div class="card">
+        <h2>🚦 Green Signal Time</h2>
+        <p>30 seconds</p>
+    </div>
+
+    <div class="card">
+        <h2>📊 Vehicles Processed</h2>
+        <p>4</p>
+    </div>
+
+    <div class="card">
+        <h2>📈 Processing Rate</h2>
+        <p>100%</p>
+    </div>
+
+    <div class="card">
+        <h2>🤖 Model</h2>
+        <p>Decision Tree</p>
+    </div>
+
+</div>
+
+<div class="buttons">
+
+    <button onclick="showDetection()">
+        Detect Vehicles
+    </button>
+
+    <button onclick="showAnalysis()">
+        Analyze Traffic
+    </button>
+
+    <button onclick="showSimulation()">
+        Run Simulation
+    </button>
+
+</div>
+
+<div id="result" class="result">
+    Click a button to view the demonstration result.
+</div>
+
+<div class="note">
+    <strong>Demo Notice:</strong>
+    This GitHub Pages version is a static demonstration of the project dashboard.
+    The complete Flask, YOLO and Machine Learning backend runs locally.
+</div>
+```
+
+</div>
+
+<script>
+
+function showDetection() {
+
+    document.getElementById("result").innerHTML =
+        "🚗 YOLO vehicle detection demonstration: <strong>4 vehicles detected.</strong>";
+
+}
+
+function showAnalysis() {
+
+    document.getElementById("result").innerHTML =
+        "📊 Traffic analyzed successfully. " +
+        "Traffic density: <strong>Low</strong>. " +
+        "Recommended green signal time: <strong>30 seconds</strong>.";
+
+}
+
+function showSimulation() {
+
+    document.getElementById("result").innerHTML =
+        "🔄 Simulation: <strong>4 vehicles</strong> detected. " +
+        "30 seconds of green signal processed approximately " +
+        "<strong>4 vehicles</strong>. 0 vehicles remain.";
+
+}
+
+</script>
+
+</body>
+</html>
